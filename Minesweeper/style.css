@@ -1,0 +1,86 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin: 0;
+}
+main{
+  display: none;
+  flex-direction: column;
+}
+
+.grid {
+  font-size: xx-small;
+  display: flex;
+  flex-direction: row;
+  border: 1px solid grey;
+  width: 450px;
+  height: 450px;
+  flex-wrap: wrap;
+}
+
+.cell {
+  display: flex;
+  color: white;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  flex-wrap: wrap;
+  margin: 0;
+  width: 10%;
+  height: 10%;
+  border: 2px solid  gray;
+}
+.mine{
+  background-color: darkred;
+}
+.empty{
+  background-color: darkgreen;
+}
+.shine{
+  box-shadow: inset 0px 0px 5px 2px rgba(196,133,25,0.81);
+}
+.flag{
+  background-color: burlywood;
+}
+span{
+  display: flex;
+  justify-content: right;
+  align-items: right;
+  flex-direction: column;
+
+}
+button{
+  margin-left: 5%;
+  margin-right: 5%;
+}
+.UI{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.reset{
+  margin-top: 3%;
+  margin-right: 0%;
+  margin-bottom: 3%;
+}
+*.unselectable {
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+
+  /*
+    Introduced in IE 10.
+    See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+  */
+  -ms-user-select: none;
+  user-select: none;
+}
