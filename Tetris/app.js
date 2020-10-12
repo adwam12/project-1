@@ -1,9 +1,9 @@
 const grid = document.querySelector('.grid')
 // Specifying the width of the grid.
-const width = 10
+const width = 20
 // If I start root off as undefined, this could
 // introduce bugs
-let root = 4
+let root = randomInRange(4,width)
 // Keep track of my cells
 const cells = [[]]
 
@@ -13,7 +13,7 @@ for (let i = 0; i < width ** 2; i++) {
   const div = document.createElement('div')
   div.classList.add('cell')
   grid.appendChild(div)
-  div.innerHTML = i // ! This line will number your grid cells
+  // div.innerHTML = i // ! This line will number your grid cells
   // Push the div to my array of cells
   cells.push(div)
 }
@@ -25,6 +25,20 @@ const gridTest = Array.from(document.querySelectorAll('.cell'))
 cells[root].classList.remove('root')
 // root -= 1
 cells[root].classList.add('root')
+
+function randomShape() {
+  const choices = ['Ldown', 'Lup', 'Lleft', 'Lright', 'Tdown', 'Tright', 'Tup', 'Tleft', 'Zdown', 'Zright', 'Zdown', 'Zright', 'Cdown', 'Cright', 'Cdown', 'Cright', 'Sdown', 'Sright', 'Sdown', 'Sright']
+  return choices[randomInRange(0, 19)]
+
+  // const choices = ['Zdown', 'Zright']
+  // return choices[randomInRange(0, 1)]
+}
+
+function randomInRange(min, max) {
+  //Returns a random number in range
+  return Math.round(Math.random() * (max - min) + min)
+}
+
 
 // gridTest.forEach(cell => {
 //   if (cell.classList.contains('root') === true) {
@@ -153,6 +167,9 @@ document.addEventListener('keydown', (event) => {
     //   }
     // })
   }
+  if (key === 'l') {
+    shapePos = 'Zdown'
+  }
   if (key === 'w') {
     if (canTurn(shapePos) === true) {
       if (shapePos === 'Ldown') {
@@ -193,6 +210,99 @@ document.addEventListener('keydown', (event) => {
 
         return
       }
+      if (shapePos === 'Tdown') {
+        shapeTDownToRight.pos1 = root + 1,
+        shapeTDownToRight.pos2 = root + width,
+        shapeTDownToRight.pos3 = root - width
+        console.log(shapeTDownToRight)
+        shapePos = 'Tright'
+        activeShape(shapeTDownToRight)
+
+        return
+      }
+
+      if (shapePos === 'Tright') {
+        shapeTRightToUp.pos1 = root + 1,
+        shapeTRightToUp.pos2 = root - 1,
+        shapeTRightToUp.pos3 = root - width
+        console.log(shapeTRightToUp)
+        shapePos = 'Tup'
+        activeShape(shapeTRightToUp)
+
+        return
+      }
+      if (shapePos === 'Tup') {
+        shapeTUpToLeft.pos1 = root - 1,
+        shapeTUpToLeft.pos2 = root + width,
+        shapeTUpToLeft.pos3 = root - width
+        console.log(shapeTUpToLeft)
+        shapePos = 'Tleft'
+        activeShape(shapeTUpToLeft)
+
+        return
+      }
+      if (shapePos === 'Tleft') {
+        shapeTLeftToDown.pos1 = root + 1,
+        shapeTLeftToDown.pos2 = root - 1,
+        shapeTLeftToDown.pos3 = root + width
+        console.log(shapeTLeftToDown)
+        shapePos = 'Tdown'
+        activeShape(shapeTLeftToDown)
+
+        return
+      }
+      if (shapePos === 'Zdown') {
+        shapeZDownToRight.pos1 = root - width,
+        shapeZDownToRight.pos2 = root + 1,
+        shapeZDownToRight.pos3 = root + width + 1
+        shapePos = 'Zright'
+        activeShape(shapeZDownToRight)
+        return
+      }
+
+      if (shapePos === 'Zright') {
+        shapeZRightToUp.pos1 = root + width,
+        shapeZRightToUp.pos2 = root + 1,
+        shapeZRightToUp.pos3 = root + width - 1
+        shapePos = 'Zdown'
+        activeShape(shapeZRightToUp)
+        return
+      }
+      if (shapePos === 'Cdown') {
+        shapeCDownToRight.pos1 = root + width,
+        shapeCDownToRight.pos2 = root + 1,
+        shapeCDownToRight.pos3 = root + width + 1
+        shapePos = 'Cright'
+        activeShape(shapeCDownToRight)
+        return
+      }
+
+      if (shapePos === 'Cright') {
+        shapeCRightToUp.pos1 = root + width,
+        shapeCRightToUp.pos2 = root + 1,
+        shapeCRightToUp.pos3 = root + width + 1
+        shapePos = 'Cdown'
+        activeShape(shapeCRightToUp)
+        return
+      }
+      if (shapePos === 'Sdown') {
+        shapeSDownToRight.pos1 = root + 1,
+        shapeSDownToRight.pos2 = root + 2,
+        shapeSDownToRight.pos3 = root - 1
+        shapePos = 'Sright'
+        activeShape(shapeSDownToRight)
+        return
+      }
+
+      if (shapePos === 'Sright') {
+        shapeSRightToUp.pos1 = root + width,
+        shapeSRightToUp.pos2 = root + (width*2),
+        shapeSRightToUp.pos3 = root - width
+        shapePos = 'Sdown'
+        activeShape(shapeSRightToUp)
+        return
+      }
+
     }
   }
 }
@@ -232,7 +342,99 @@ let shapeLLeftToDown = {
   pos3: (root - 2) + width
 }
 
-let shapePos = 'Ldown'
+//tShape
+
+let shapeTDownToRight = {
+  root: root,
+  pos1: root - 1,
+  pos2: root + width,
+  pos3: root + 1
+}
+
+let shapeTRightToUp = {
+  root: root,
+  pos1: root + 1,
+  pos2: root + width,
+  pos3: root - width
+
+}
+
+let shapeTUpToLeft = {
+  root: root,
+  pos1: root + 1,
+  pos2: root - 1,
+  pos3: root - width
+}
+
+let shapeTLeftToDown = {
+  root: root,
+  pos1: root - 1,
+  pos2: root + width,
+  pos3: root - width
+}
+
+//ZShape
+let shapeZDownToRight = {
+  root: root,
+  pos1: root + 1,
+  pos2: root + width,
+  pos3: root + width - 1
+}
+
+let shapeZRightToUp = {
+  root: root,
+  pos1: root - width,
+  pos2: root + 1,
+  pos3: root + width - 1
+
+}
+
+
+//CShape
+let shapeCRightToUp = {
+  root: root,
+  pos1: root + width,
+  pos2: root + 1,
+  pos3: root + width + 1
+
+}
+let shapeCDownToRight = {
+  root: root,
+  pos1: root + width,
+  pos2: root + 1,
+  pos3: root + width + 1
+}
+//SShape
+let shapeSRightToUp = {
+  root: root,
+  pos1: root + width,
+  pos2: root + (width*2),
+  pos3: root - width 
+
+}
+let shapeSDownToRight = {
+  root: root,
+  pos1: root + 1,
+  pos2: root + 2,
+  pos3: root - 1
+}
+
+//
+// let shapeZUpToLeft = {
+//   root: root,
+//   pos1: root + 1,
+//   pos2: root - 1,
+//   pos3: root - width
+// }
+
+// let shapeZLeftToDown = {
+//   root: root,
+//   pos1: root - 1,
+//   pos2: root + width,
+//   pos3: root - width
+// }
+let shapePos = randomShape()
+
 // gridTest.forEach(cell => {
 //   console.log(gridTest.indexOf(cell))
 //   const pos = gridTest.indexOf(cell)
@@ -247,6 +449,7 @@ function activeShape(shape) {
         gridTest.forEach((cell) => {
           if (Object.values(shape).includes(gridTest.indexOf(cell))) {
             cell.classList.add('inactive')
+            shapePos = randomShape()
             root = 4
             updateShape(shape)
           }
@@ -259,17 +462,10 @@ function activeShape(shape) {
       console.log(shape.root)
 
       // console.log('Works!')
-      if ((gridTest.indexOf(cell) > 89) || (filledCells.includes(gridTest.indexOf(cell)))) {
+      if ((gridTest.indexOf(cell) >= ((width ** 2) - width)) || (filledCells.includes(gridTest.indexOf(cell)))) {
         console.log('Object: ', shape)
         console.log('Values in the Object: ', Object.values(shape))
         console.log('FilledCells: ', filledCells)
-        // console.log(Object.values(shape) in filledCells)
-        // console.log(filledCells.includes(Object.values(shape)))
-
-        // if (!(filledCells.includes(Object.values(shape)))){
-        //   filledCells.push(Object.values(shape))
-        //   console.log(filledCells)
-        // }
 
         if (!(filledCells.includes(gridTest.indexOf(cell)))) {
           // filledCells = Object.values(shape)
@@ -326,6 +522,91 @@ function updateShape(shapePos) {
     pos2: root - 2,
     pos3: (root - 2) + width
   }
+
+
+  shapeTDownToRight = {
+    root: root,
+    pos1: root - 1,
+    pos2: root + width,
+    pos3: root + 1
+  }
+
+  shapeTRightToUp = {
+    root: root,
+    pos1: root + 1,
+    pos2: root + width,
+    pos3: root - width
+
+  }
+
+  shapeTUpToLeft = {
+    root: root,
+    pos1: root + 1,
+    pos2: root - 1,
+    pos3: root - width
+  }
+
+  shapeTLeftToDown = {
+    root: root,
+    pos1: root - 1,
+    pos2: root + width,
+    pos3: root - width
+  }
+
+  shapeZDownToRight = {
+    root: root,
+    pos1: root + width,
+    pos2: root + 1,
+    pos3: root + width - 1
+  }
+
+  shapeZRightToUp = {
+    root: root,
+    pos1: root - width,
+    pos2: root + 1,
+    pos3: root + width + 1
+
+  }
+  shapeCRightToUp = {
+    root: root,
+    pos1: root + width,
+    pos2: root + 1,
+    pos3: root + width + 1
+  
+  }
+  shapeCDownToRight = {
+    root: root,
+    pos1: root + width,
+    pos2: root + 1,
+    pos3: root + width + 1
+  }
+  shapeSRightToUp = {
+    root: root,
+    pos1: root + width,
+    pos2: root + (width*2),
+    pos3: root - width 
+  
+  }
+  shapeSDownToRight = {
+    root: root,
+    pos1: root + 1,
+    pos2: root + 2,
+    pos3: root - 1
+  }
+
+  if (shapePos === 'Tdown') {
+    activeShape(shapeTDownToRight)
+  }
+  if (shapePos === 'Tright') {
+    activeShape(shapeTRightToUp)
+  }
+  if (shapePos === 'Tup') {
+    activeShape(shapeTUpToLeft)
+  }
+  if (shapePos === 'Tleft') {
+    activeShape(shapeTLeftToDown)
+  }
+
   if (shapePos === 'Ldown') {
     activeShape(shapeLDownToRight)
   }
@@ -338,13 +619,31 @@ function updateShape(shapePos) {
   if (shapePos === 'Lleft') {
     activeShape(shapeLLeftToDown)
   }
+  if (shapePos === 'Zdown') {
+    activeShape(shapeZDownToRight)
+  }
+  if (shapePos === 'Zright') {
+    activeShape(shapeZRightToUp)
+  }
+  if (shapePos === 'Cdown') {
+    activeShape(shapeCDownToRight)
+  }
+  if (shapePos === 'Cright') {
+    activeShape(shapeCRightToUp)
+  }
+  if (shapePos === 'Sdown') {
+    activeShape(shapeSDownToRight)
+  }
+  if (shapePos === 'Sright') {
+    activeShape(shapeSRightToUp)
+  }
 }
 updateShape(shapePos)
-// setInterval(() => {
-//   root += width
-//   updateShape(shapePos)
+setInterval(() => {
+  root += width
+  updateShape(shapePos)
 
-// }, 500);
+}, 250);
 
 let counter = 0
 gridTest.forEach(cell => {
@@ -366,6 +665,37 @@ function isFreeLeft(shape) {
   }
   if (shape === 'Lleft') {
     shape = shapeLLeftToDown
+  }
+
+  if (shape === 'Tdown') {
+    shape = shapeTDownToRight
+  }
+  if (shape === 'Tright') {
+    shape = shapeTRightToUp
+  }
+  if (shape === 'Tup') {
+    shape = shapeTUpToLeft
+  }
+  if (shape === 'Tleft') {
+    shape = shapeTLeftToDown
+  }
+  if (shape === 'Zdown') {
+    shape = shapeZDownToRight
+  }
+  if (shape === 'Zright') {
+    shape = shapeZRightToUp
+  }
+  if (shape === 'Cdown') {
+    shape = shapeCDownToRight
+  }
+  if (shape === 'Cright') {
+    shape = shapeCRightToUp
+  }
+  if (shape === 'Sdown') {
+    shape = shapeSDownToRight
+  }
+  if (shape === 'Sright') {
+    shape = shapeSRightToUp
   }
   gridTest.forEach(cell => {
     if (((gridTest.indexOf(cell)) === (shape.root - 1)) || ((gridTest.indexOf(cell)) === (shape.pos1 - 1)) || ((gridTest.indexOf(cell)) === (shape.pos2 - 1)) || ((gridTest.indexOf(cell)) === (shape.pos3 - 1))) {
@@ -398,6 +728,37 @@ function isFreeRight(shape) {
   if (shape === 'Lleft') {
     shape = shapeLLeftToDown
   }
+
+  if (shape === 'Tdown') {
+    shape = shapeTDownToRight
+  }
+  if (shape === 'Tright') {
+    shape = shapeTRightToUp
+  }
+  if (shape === 'Tup') {
+    shape = shapeTUpToLeft
+  }
+  if (shape === 'Tleft') {
+    shape = shapeTLeftToDown
+  }
+  if (shape === 'Zdown') {
+    shape = shapeZDownToRight
+  }
+  if (shape === 'Zright') {
+    shape = shapeZRightToUp
+  }
+  if (shape === 'Cdown') {
+    shape = shapeCDownToRight
+  }
+  if (shape === 'Cright') {
+    shape = shapeCRightToUp
+  }
+  if (shape === 'Sdown') {
+    shape = shapeSDownToRight
+  }
+  if (shape === 'Sright') {
+    shape = shapeSRightToUp
+  }
   gridTest.forEach(cell => {
     if (((gridTest.indexOf(cell)) === (shape.root + 1)) || ((gridTest.indexOf(cell)) === (shape.pos1 + 1)) || ((gridTest.indexOf(cell)) === (shape.pos2 + 1)) || ((gridTest.indexOf(cell)) === (shape.pos3 + 1))) {
       if ((cell.classList.contains('border')) || (cell.classList.contains('inactive'))) {
@@ -429,6 +790,37 @@ function canTurn(shape) {
   if (shape === 'Lleft') {
     shape = shapeLDownToRight
   }
+
+  if (shape === 'Tdown') {
+    shape = shapeTRightToUp
+  }
+  if (shape === 'Tright') {
+    shape = shapeTUpToLeft
+  }
+  if (shape === 'Tup') {
+    shape = shapeTLeftToDown
+  }
+  if (shape === 'Tleft') {
+    shape = shapeTDownToRight
+  }
+  if (shape === 'Zdown') {
+    shape = shapeZRightToUp
+  }
+  if (shape === 'Zright') {
+    shape = shapeZDownToRight
+  }
+  if (shape === 'Cdown') {
+    shape = shapeCRightToUp
+  }
+  if (shape === 'Cright') {
+    shape = shapeCDownToRight
+  }
+  if (shape === 'Sdown') {
+    shape = shapeSRightToUp
+  }
+  if (shape === 'Sright') {
+    shape = shapeSDownToRight
+  }
   return canRotate(shape)
 }
 
@@ -449,6 +841,37 @@ function canRotate(shape) {
   if (shape === 'Lleft') {
     shape = shapeLLeftToDown
   }
+
+  if (shape === 'Tdown') {
+    shape = shapeTDownToRight
+  }
+  if (shape === 'Tright') {
+    shape = shapeTRightToUp
+  }
+  if (shape === 'Tup') {
+    shape = shapeTUpToLeft
+  }
+  if (shape === 'Tleft') {
+    shape = shapeTLeftToDown
+  }
+  if (shape === 'Zdown') {
+    shape = shapeZDownToRight
+  }
+  if (shape === 'Zright') {
+    shape = shapeZRightToUp
+  }
+  if (shape === 'Cdown') {
+    shape = shapeCDownToRight
+  }
+  if (shape === 'Cright') {
+    shape = shapeCRightToUp
+  }
+  if (shape === 'Sdown') {
+    shape = shapeSDownToRight
+  }
+  if (shape === 'Sright') {
+    shape = shapeSRightToUp
+  }
   gridTest.forEach(cell => {
     if (((gridTest.indexOf(cell)) === (shape.root)) || ((gridTest.indexOf(cell)) === (shape.pos1)) || ((gridTest.indexOf(cell)) === (shape.pos2)) || ((gridTest.indexOf(cell)) === (shape.pos3))) {
       if ((cell.classList.contains('border')) || (cell.classList.contains('inactive'))) {
@@ -467,33 +890,3 @@ function canRotate(shape) {
 }
 
 
-//tShape
-
-let shapeTDownToRight = {
-  root: root,
-  pos1: root - 1 ,
-  pos2: root + width,
-  pos3: root + 1
-} 
-
-let shapeTRightToUp = {
-  root: root,
-  pos1: root + 1,
-  pos2: root + width,
-  pos3: root - width 
-
-}
-
-let shapeTUpToLeft = {
-  root: root,
-  pos1: root + 1,
-  pos2: root - 1,
-  pos3: root - width
-}
-
-let shapeTLeftToDown = {
-  root: root,
-  pos1: root - 1,
-  pos2: root + width,
-  pos3: root - width 
-}

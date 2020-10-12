@@ -22,8 +22,8 @@ body {
 }
 
 .cell {
-  width: 10%;
-  height: 10%;
+  width: 5%;
+  height: 5%;
   color: white;
   border: 1px solid green;
 }
@@ -31,6 +31,7 @@ body {
 
 .active{
   background-color: aqua;
+  box-shadow: inset 0px 0px 2px 2px rgba(253, 16, 16, 0.75);
   color: black
 }
 
