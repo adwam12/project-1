@@ -3,6 +3,7 @@
 }
 
 body {
+  background-color: black;
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -23,10 +24,20 @@ body {
 .cell {
   width: 10%;
   height: 10%;
+  color: white;
   border: 1px solid green;
 }
 
 
-.blue{
+.active{
   background-color: aqua;
+  color: black
+}
+
+.inactive{
+  background-color: blue;
+  color: black
+}
+.border{
+  background-color: gray;
 }
