@@ -1,9 +1,9 @@
 const grid = document.querySelector('.grid')
 // Specifying the width of the grid.
-const width = 20
+const width = 10
 // If I start root off as undefined, this could
 // introduce bugs
-let root = randomInRange(4,width)
+let root = randomInRange(4, width)
 // Keep track of my cells
 const cells = [[]]
 
@@ -13,7 +13,7 @@ for (let i = 0; i < width ** 2; i++) {
   const div = document.createElement('div')
   div.classList.add('cell')
   grid.appendChild(div)
-  // div.innerHTML = i // ! This line will number your grid cells
+  div.innerHTML = i // ! This line will number your grid cells
   // Push the div to my array of cells
   cells.push(div)
 }
@@ -168,7 +168,8 @@ document.addEventListener('keydown', (event) => {
     // })
   }
   if (key === 'l') {
-    shapePos = 'Zdown'
+    console.log(filledCells)
+    isFull()
   }
   if (key === 'w') {
     if (canTurn(shapePos) === true) {
@@ -212,8 +213,8 @@ document.addEventListener('keydown', (event) => {
       }
       if (shapePos === 'Tdown') {
         shapeTDownToRight.pos1 = root + 1,
-        shapeTDownToRight.pos2 = root + width,
-        shapeTDownToRight.pos3 = root - width
+          shapeTDownToRight.pos2 = root + width,
+          shapeTDownToRight.pos3 = root - width
         console.log(shapeTDownToRight)
         shapePos = 'Tright'
         activeShape(shapeTDownToRight)
@@ -223,8 +224,8 @@ document.addEventListener('keydown', (event) => {
 
       if (shapePos === 'Tright') {
         shapeTRightToUp.pos1 = root + 1,
-        shapeTRightToUp.pos2 = root - 1,
-        shapeTRightToUp.pos3 = root - width
+          shapeTRightToUp.pos2 = root - 1,
+          shapeTRightToUp.pos3 = root - width
         console.log(shapeTRightToUp)
         shapePos = 'Tup'
         activeShape(shapeTRightToUp)
@@ -233,8 +234,8 @@ document.addEventListener('keydown', (event) => {
       }
       if (shapePos === 'Tup') {
         shapeTUpToLeft.pos1 = root - 1,
-        shapeTUpToLeft.pos2 = root + width,
-        shapeTUpToLeft.pos3 = root - width
+          shapeTUpToLeft.pos2 = root + width,
+          shapeTUpToLeft.pos3 = root - width
         console.log(shapeTUpToLeft)
         shapePos = 'Tleft'
         activeShape(shapeTUpToLeft)
@@ -243,18 +244,17 @@ document.addEventListener('keydown', (event) => {
       }
       if (shapePos === 'Tleft') {
         shapeTLeftToDown.pos1 = root + 1,
-        shapeTLeftToDown.pos2 = root - 1,
-        shapeTLeftToDown.pos3 = root + width
+          shapeTLeftToDown.pos2 = root - 1,
+          shapeTLeftToDown.pos3 = root + width
         console.log(shapeTLeftToDown)
         shapePos = 'Tdown'
         activeShape(shapeTLeftToDown)
-
         return
       }
       if (shapePos === 'Zdown') {
         shapeZDownToRight.pos1 = root - width,
-        shapeZDownToRight.pos2 = root + 1,
-        shapeZDownToRight.pos3 = root + width + 1
+          shapeZDownToRight.pos2 = root + 1,
+          shapeZDownToRight.pos3 = root + width + 1
         shapePos = 'Zright'
         activeShape(shapeZDownToRight)
         return
@@ -262,16 +262,16 @@ document.addEventListener('keydown', (event) => {
 
       if (shapePos === 'Zright') {
         shapeZRightToUp.pos1 = root + width,
-        shapeZRightToUp.pos2 = root + 1,
-        shapeZRightToUp.pos3 = root + width - 1
+          shapeZRightToUp.pos2 = root + 1,
+          shapeZRightToUp.pos3 = root + width - 1
         shapePos = 'Zdown'
         activeShape(shapeZRightToUp)
         return
       }
       if (shapePos === 'Cdown') {
         shapeCDownToRight.pos1 = root + width,
-        shapeCDownToRight.pos2 = root + 1,
-        shapeCDownToRight.pos3 = root + width + 1
+          shapeCDownToRight.pos2 = root + 1,
+          shapeCDownToRight.pos3 = root + width + 1
         shapePos = 'Cright'
         activeShape(shapeCDownToRight)
         return
@@ -279,16 +279,16 @@ document.addEventListener('keydown', (event) => {
 
       if (shapePos === 'Cright') {
         shapeCRightToUp.pos1 = root + width,
-        shapeCRightToUp.pos2 = root + 1,
-        shapeCRightToUp.pos3 = root + width + 1
+          shapeCRightToUp.pos2 = root + 1,
+          shapeCRightToUp.pos3 = root + width + 1
         shapePos = 'Cdown'
         activeShape(shapeCRightToUp)
         return
       }
       if (shapePos === 'Sdown') {
         shapeSDownToRight.pos1 = root + 1,
-        shapeSDownToRight.pos2 = root + 2,
-        shapeSDownToRight.pos3 = root - 1
+          shapeSDownToRight.pos2 = root + 2,
+          shapeSDownToRight.pos3 = root - 1
         shapePos = 'Sright'
         activeShape(shapeSDownToRight)
         return
@@ -296,8 +296,8 @@ document.addEventListener('keydown', (event) => {
 
       if (shapePos === 'Sright') {
         shapeSRightToUp.pos1 = root + width,
-        shapeSRightToUp.pos2 = root + (width*2),
-        shapeSRightToUp.pos3 = root - width
+          shapeSRightToUp.pos2 = root + (width * 2),
+          shapeSRightToUp.pos3 = root - width
         shapePos = 'Sdown'
         activeShape(shapeSRightToUp)
         return
@@ -408,8 +408,8 @@ let shapeCDownToRight = {
 let shapeSRightToUp = {
   root: root,
   pos1: root + width,
-  pos2: root + (width*2),
-  pos3: root - width 
+  pos2: root + (width * 2),
+  pos3: root - width
 
 }
 let shapeSDownToRight = {
@@ -449,9 +449,24 @@ function activeShape(shape) {
         gridTest.forEach((cell) => {
           if (Object.values(shape).includes(gridTest.indexOf(cell))) {
             cell.classList.add('inactive')
-            shapePos = randomShape()
-            root = 4
-            updateShape(shape)
+            if (!(filledCells.includes(gridTest.indexOf(cell)))) {
+              console.log('ADDING TO FILLED')
+              // filledCells = Object.values(shape)
+
+              filledCells = filledCells.concat(Object.values(shape))
+              console.log(filledCells)
+              gridTest.forEach((cell) => {
+                if (Object.values(shape).includes(gridTest.indexOf(cell))) {
+                  cell.classList.add('inactive')
+                  root = 4
+                  isFull()
+                  shapePos = randomShape()
+                  updateShape(shape)
+                }
+
+              })
+            }
+
           }
 
         })
@@ -468,6 +483,7 @@ function activeShape(shape) {
         console.log('FilledCells: ', filledCells)
 
         if (!(filledCells.includes(gridTest.indexOf(cell)))) {
+          console.log('ADDING TO FILLED')
           // filledCells = Object.values(shape)
 
           filledCells = filledCells.concat(Object.values(shape))
@@ -476,6 +492,8 @@ function activeShape(shape) {
             if (Object.values(shape).includes(gridTest.indexOf(cell))) {
               cell.classList.add('inactive')
               root = 4
+              isFull()
+              shapePos = randomShape()
               updateShape(shape)
             }
 
@@ -572,7 +590,7 @@ function updateShape(shapePos) {
     pos1: root + width,
     pos2: root + 1,
     pos3: root + width + 1
-  
+
   }
   shapeCDownToRight = {
     root: root,
@@ -580,19 +598,21 @@ function updateShape(shapePos) {
     pos2: root + 1,
     pos3: root + width + 1
   }
-  shapeSRightToUp = {
+  shapeSDownToRight = {
     root: root,
     pos1: root + width,
-    pos2: root + (width*2),
-    pos3: root - width 
-  
+    pos2: root + (width * 2),
+    pos3: root - width
   }
-  shapeSDownToRight = {
+
+  shapeSRightToUp = {
     root: root,
     pos1: root + 1,
     pos2: root + 2,
     pos3: root - 1
+
   }
+
 
   if (shapePos === 'Tdown') {
     activeShape(shapeTDownToRight)
@@ -638,12 +658,7 @@ function updateShape(shapePos) {
     activeShape(shapeSRightToUp)
   }
 }
-updateShape(shapePos)
-setInterval(() => {
-  root += width
-  updateShape(shapePos)
 
-}, 250);
 
 let counter = 0
 gridTest.forEach(cell => {
@@ -653,7 +668,7 @@ gridTest.forEach(cell => {
 })
 
 function isFreeLeft(shape) {
-  let state = true
+  let stateL = true
   if (shape === 'Ldown') {
     shape = shapeLDownToRight
   }
@@ -702,20 +717,17 @@ function isFreeLeft(shape) {
       if ((cell.classList.contains('border')) || (cell.classList.contains('inactive'))) {
         console.log('Busy!')
         console.log('Shape is:', shape)
-        state = false
+        stateL = false
       }
-    }
-    if (Object.values(shape).includes(gridTest.indexOf(cell))) {
-
     }
 
 
   })
-  return state
+  return stateL
 }
 
 function isFreeRight(shape) {
-  let state = true
+  let stateR = true
   if (shape === 'Ldown') {
     shape = shapeLDownToRight
   }
@@ -764,7 +776,7 @@ function isFreeRight(shape) {
       if ((cell.classList.contains('border')) || (cell.classList.contains('inactive'))) {
 
         console.log('Busy!')
-        state = false
+        stateR = false
       }
     }
     if (Object.values(shape).includes(gridTest.indexOf(cell))) {
@@ -773,7 +785,7 @@ function isFreeRight(shape) {
 
 
   })
-  return state
+  return stateR
 }
 
 function canTurn(shape) {
@@ -828,7 +840,7 @@ function canTurn(shape) {
 
 
 function canRotate(shape) {
-  let state = true
+  let stateB = true
   if (shape === 'Ldown') {
     shape = shapeLDownToRight
   }
@@ -877,7 +889,7 @@ function canRotate(shape) {
       if ((cell.classList.contains('border')) || (cell.classList.contains('inactive'))) {
         console.log('Busy!')
         console.log('Shape is:', shape)
-        state = false
+        stateB = false
       }
     }
     if (Object.values(shape).includes(gridTest.indexOf(cell))) {
@@ -886,7 +898,120 @@ function canRotate(shape) {
 
 
   })
-  return state
+  return stateB
 }
 
 
+// function isFull(){
+//   let adjacentFilled = []
+
+// }
+function isFull() {
+  let targetRange = []
+  for (let i = 1; i < width; i++) {
+    targetRange.push((width * i) + 1)
+  }
+
+  gridTest.forEach((cell) => {
+    if (targetRange.includes(gridTest.indexOf(cell))) {
+      // console.log('GOT ONE!')
+      checkRow(gridTest.indexOf(cell))
+    }
+
+  })
+}
+
+function checkRow(target) {
+  // for (let i = 0; i < (width ** 2); i++) {
+  //   console.log(i)
+  // }
+  let adjacentFilled = []
+  const targetMem = target
+  let shift = false
+
+
+
+  gridTest.forEach((cell) => {
+
+    if (gridTest.indexOf(cell) === target) {
+      if (cell.classList.contains('inactive')) {
+        adjacentFilled.push(gridTest.indexOf(cell))
+
+        target += 1
+
+      }
+    }
+    if (adjacentFilled.length === width - 2) {
+      // console.log('FULL ROW')
+      // console.log('ADJ = ', adjacentFilled)
+      gridTest.forEach(cell => {
+        // console.log(gridTest.indexOf(cell))
+        if (adjacentFilled.includes(gridTest.indexOf(cell))) {
+
+          // console.log(cell)
+
+          // console.log('INDEX OF FOUND', gridTest.indexOf(cell))
+          // console.log('destroy', gridTest.indexOf(cell))
+          cell.classList.remove('inactive')
+          filledCells = popIndex(filledCells, gridTest.indexOf(cell))
+          // console.log(filledCells)
+          // console.log(shapePos)
+          shift = true
+          updateShape(shapePos)
+        }
+      })
+
+
+    }
+
+
+  })
+
+  if (shift === true) {
+    shiftAllDown(targetMem)
+  }
+
+
+}
+
+function shiftAllDown(above) {
+  gridTest.slice().reverse().forEach(cell => {
+
+
+
+    if (gridTest.indexOf(cell) < above) {
+      if (cell.classList.contains('inactive')) {
+        gridTest.forEach((cellUnder) => {
+          if (gridTest.indexOf(cellUnder) === (gridTest.indexOf(cell) + width)) {
+            // console.log('check')
+            // console.log('Cell Master: ', cell, 'Cell Checked:', cellUnder)
+            if ((cellUnder.classList.contains('inactive') === false)) {
+              // console.log('SHift it down', cellUnder)
+              cell.classList.remove('inactive')
+              cellUnder.classList.add('inactive')
+
+            }
+          }
+
+        })
+      }
+    }
+
+  })
+}
+
+function popIndex(array, index) {
+  //Removes the item at index in given array
+  const pre = array.slice(0, index + 1)
+  const post = array.slice(index + 1)
+  return pre.slice(0, -1).concat(post)
+}
+
+
+// updateShape(shapePos)
+// setInterval(() => {
+//   root += width
+//   updateShape(shapePos)
+
+// }, 250);
+updateShape(shapePos)
