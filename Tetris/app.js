@@ -1,27 +1,40 @@
 const grid = document.querySelector('.grid')
+const menu = document.querySelector('menu')
+const score = document.querySelector('h1')
+const main = document.querySelector('main')
+const gamemodeButton = Array.from(document.querySelectorAll('.gamemode'))
 // Specifying the width of the grid.
-const width = 10
+const width = 20
 // If I start root off as undefined, this could
 // introduce bugs
-let root = randomInRange(4, width)
+let root = width / 2
 // Keep track of my cells
 const cells = [[]]
 
+let gamemode = 0
+
+let currentScore = 0
+score.innerHTML = 'Score: ' + currentScore
+
+function start(){
+
+  
+}
+
 
 for (let i = 0; i < width ** 2; i++) {
-  // Create an element
+
   const div = document.createElement('div')
   div.classList.add('cell')
   grid.appendChild(div)
-  div.innerHTML = i // ! This line will number your grid cells
-  // Push the div to my array of cells
+  // div.innerHTML = i // ! This line will number your grid cells
+
   cells.push(div)
 }
 let filledCells = []
 
-const arrayMaster = [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12, 13, 14, 15], [16, 17, 18, 19, 20], [21, 22, 23, 24, 25]]
-
 const gridTest = Array.from(document.querySelectorAll('.cell'))
+
 cells[root].classList.remove('root')
 // root -= 1
 cells[root].classList.add('root')
@@ -38,99 +51,6 @@ function randomInRange(min, max) {
   //Returns a random number in range
   return Math.round(Math.random() * (max - min) + min)
 }
-
-
-// gridTest.forEach(cell => {
-//   if (cell.classList.contains('root') === true) {
-//     // console.log(findAround(gridTest.indexOf(cell)))
-//     // cube(findAround(gridTest.indexOf(cell)))
-
-//     color(findAround(gridTest.indexOf(cell), 'L'), 0, 0, 0)
-//     // rotate(findAround(gridTest.indexOf(cell)),0,0,0)
-//   }
-
-// });
-
-// function findAround(target, shape) {
-//   let around = [target]
-//   for (let r = 0; r < arrayMaster.length; r++) {
-//     for (let c = 0; c < arrayMaster[r].length; c++) {
-//       if (arrayMaster[r][c] === target) {
-//         if (shape === 'cube') {
-//           around.push(arrayMaster[r][c + 1])
-//           around.push(arrayMaster[r + 1][c])
-//           around.push(arrayMaster[r + 1][c + 1])
-//         }
-//         if (shape === 'L') {
-//           around.push(arrayMaster[r + 1][c])
-//           around.push(arrayMaster[r + 2][c])
-//           around.push(arrayMaster[r + 2][c + 1])
-//         }
-//       }
-//     }
-//   }
-//   console.log(around)
-//   return around
-// }
-
-// function clearBoard() {
-//   gridTest.forEach(cell => {
-//     if (cell.classList.contains('blue')) {
-//       cell.classList.remove('blue')
-//     }
-//   })
-// }
-
-// function clearPiece(arr) {
-//   gridTest.forEach(cell => {
-//     if (arr.includes(gridTest.indexOf(cell))) {
-//       cell.classList.remove('blue')
-//     }
-//   })
-// }
-
-// function color(arr) {
-//   gridTest.forEach((cell) => {
-//     if (arr.includes(gridTest.indexOf(cell))) {
-//       cell.classList.add('blue')
-//       cell.classList.add('L')
-//     }
-
-
-//   })
-//   return arr
-// }
-
-// setInterval(() => {
-//   gridTest.forEach((cell) => {
-//     if (cell.classList.contains('moving') === true) {
-//       cell.classList.remove('blue')
-//     }
-//   })
-// }, 1000);
-
-// function rotate(arr, dir, shape) {
-//   const target = arr[0]
-//   let newArray = []
-//   arr.pop()
-//   arr.pop()
-//   arr.pop()
-//   arr.pop()
-//   for (let r = 0; r < arrayMaster.length; r++) {
-//     for (let c = 0; c < arrayMaster[r].length; c++) {
-//       if (arrayMaster[r][c] === target) {
-//         arr.push(arrayMaster[r][c])
-//         arr.push(arrayMaster[r][c + 1])
-//         arr.push(arrayMaster[r][c + 2])
-//         arr.push(arrayMaster[r - 1][c + 2])
-//       }
-//     }
-//   }
-//   console.log('SHould have 4: ', arr)
-//   return arr
-// }
-
-
 
 document.addEventListener('keydown', (event) => {
   const key = event.key
@@ -169,7 +89,8 @@ document.addEventListener('keydown', (event) => {
   }
   if (key === 'l') {
     console.log(filledCells)
-    isFull()
+    restart()
+
   }
   if (key === 'w') {
     if (canTurn(shapePos) === true) {
@@ -434,23 +355,34 @@ let shapeSDownToRight = {
 //   pos3: root - width
 // }
 let shapePos = randomShape()
+let shape2 = randomShape()
+
+
 
 // gridTest.forEach(cell => {
 //   console.log(gridTest.indexOf(cell))
 //   const pos = gridTest.indexOf(cell)
 
 // })
-
+upNext(shape2)
 function activeShape(shape) {
+  let changeShape = false
+  let loss = false
+
   gridTest.forEach((cell) => {
+    // console.log('active shape')
     if ((gridTest.indexOf(cell) === (shape.root + width)) || (gridTest.indexOf(cell) === (shape.pos1 + width)) || (gridTest.indexOf(cell) === (shape.pos2 + width)) || (gridTest.indexOf(cell) === (shape.pos3 + width))) {
       if (cell.classList.contains('inactive')) {
         console.log('ACTIVE BELOW')
         gridTest.forEach((cell) => {
           if (Object.values(shape).includes(gridTest.indexOf(cell))) {
+
             cell.classList.add('inactive')
+            loss = true
+
+            console.log('SET INACTIVE')
             if (!(filledCells.includes(gridTest.indexOf(cell)))) {
-              console.log('ADDING TO FILLED')
+              console.log('NOT USELESS')
               // filledCells = Object.values(shape)
 
               filledCells = filledCells.concat(Object.values(shape))
@@ -458,10 +390,23 @@ function activeShape(shape) {
               gridTest.forEach((cell) => {
                 if (Object.values(shape).includes(gridTest.indexOf(cell))) {
                   cell.classList.add('inactive')
-                  root = 4
-                  isFull()
-                  shapePos = randomShape()
-                  updateShape(shape)
+                  console.log('SET INACTIVE X2')
+                  // root = width / 2
+                  // isFull()
+                  // shapePos = randomShape()
+                  // debugger
+
+
+                  changeShape = true
+
+                  // console.log('BEFORE SWAP', shapePos, shape2)
+                  // gridTest.forEach(cell =>{
+                  //   if (cell.classList.contains('active')){
+                  //     cell.classList.remove('active')
+                  //     console.log('gone')
+                  //   }
+                  // })
+
                 }
 
               })
@@ -470,44 +415,58 @@ function activeShape(shape) {
           }
 
         })
+
       }
+
     }
     if (Object.values(shape).includes(gridTest.indexOf(cell))) {
       cell.classList.add('active')
-      console.log(shape.root)
+
+      // console.log(shape.root)
 
       // console.log('Works!')
       if ((gridTest.indexOf(cell) >= ((width ** 2) - width)) || (filledCells.includes(gridTest.indexOf(cell)))) {
         console.log('Object: ', shape)
+
         console.log('Values in the Object: ', Object.values(shape))
         console.log('FilledCells: ', filledCells)
 
-        if (!(filledCells.includes(gridTest.indexOf(cell)))) {
-          console.log('ADDING TO FILLED')
-          // filledCells = Object.values(shape)
+        // if (!(filledCells.includes(gridTest.indexOf(cell)))) {
+        //   debugger
+        //   console.log('ADDING TO FILLED')
+        //   // filledCells = Object.values(shape)
 
-          filledCells = filledCells.concat(Object.values(shape))
-          console.log(filledCells)
-          gridTest.forEach((cell) => {
-            if (Object.values(shape).includes(gridTest.indexOf(cell))) {
-              cell.classList.add('inactive')
-              root = 4
-              isFull()
-              shapePos = randomShape()
-              updateShape(shape)
-            }
+        //   filledCells = filledCells.concat(Object.values(shape))
+        //   console.log(filledCells)
+        //   gridTest.forEach((cell) => {
+        //     if (Object.values(shape).includes(gridTest.indexOf(cell))) {
+        //       cell.classList.add('inactive')
+        //       root = width / 2
+        //       isFull()
+        //       shapePos = randomShape()
+        //       updateShape(shape)
+        //     }
 
-          })
-        }
+        //   })
+        // }
         cell.classList.add('inactive')
         return filledCells
       }
     } else {
-      cell.classList.remove('active')
+      if (cell.classList.contains('active')) {
+        cell.classList.remove('active')
+      }
     }
 
   })
-
+  if (changeShape === true) {
+    newShape()
+    isFull()
+  }
+  if (loss === true){
+    checkLoss()
+    loss = false
+  }
 }
 
 
@@ -660,12 +619,8 @@ function updateShape(shapePos) {
 }
 
 
-let counter = 0
-gridTest.forEach(cell => {
-  if (((gridTest.indexOf(cell) % width) === 0) || ((gridTest.indexOf(cell) + 1) % width) === 0) {
-    cell.classList.add('border')
-  }
-})
+
+
 
 function isFreeLeft(shape) {
   let stateL = true
@@ -779,9 +734,7 @@ function isFreeRight(shape) {
         stateR = false
       }
     }
-    if (Object.values(shape).includes(gridTest.indexOf(cell))) {
 
-    }
 
 
   })
@@ -892,9 +845,7 @@ function canRotate(shape) {
         stateB = false
       }
     }
-    if (Object.values(shape).includes(gridTest.indexOf(cell))) {
 
-    }
 
 
   })
@@ -907,8 +858,8 @@ function canRotate(shape) {
 
 // }
 function isFull() {
-  let targetRange = []
-  for (let i = 1; i < width; i++) {
+  const targetRange = []
+  for (let i = 1; i < width - 1; i++) {
     targetRange.push((width * i) + 1)
   }
 
@@ -925,13 +876,15 @@ function checkRow(target) {
   // for (let i = 0; i < (width ** 2); i++) {
   //   console.log(i)
   // }
-  let adjacentFilled = []
+  const adjacentFilled = []
   const targetMem = target
   let shift = false
+  let testlist = []
 
 
 
   gridTest.forEach((cell) => {
+
 
     if (gridTest.indexOf(cell) === target) {
       if (cell.classList.contains('inactive')) {
@@ -944,6 +897,8 @@ function checkRow(target) {
     if (adjacentFilled.length === width - 2) {
       // console.log('FULL ROW')
       // console.log('ADJ = ', adjacentFilled)
+      // debugger
+      console.log("LLLLLLLLLLLLLLLLLLL")
       gridTest.forEach(cell => {
         // console.log(gridTest.indexOf(cell))
         if (adjacentFilled.includes(gridTest.indexOf(cell))) {
@@ -952,12 +907,21 @@ function checkRow(target) {
 
           // console.log('INDEX OF FOUND', gridTest.indexOf(cell))
           // console.log('destroy', gridTest.indexOf(cell))
-          cell.classList.remove('inactive')
+
           filledCells = popIndex(filledCells, gridTest.indexOf(cell))
+          if (cell.classList.contains('skip') === false) {
+            cell.classList.add('destroy')
+          }
+
+          updateShape(shapePos)
+          shift = true
+          testlist.push(cell)
+
+
+
           // console.log(filledCells)
           // console.log(shapePos)
-          shift = true
-          updateShape(shapePos)
+
         }
       })
 
@@ -968,13 +932,27 @@ function checkRow(target) {
   })
 
   if (shift === true) {
-    shiftAllDown(targetMem)
+    setTimeout(() => {
+      testlist.forEach(cell => {
+        cell.classList.remove('inactive')
+        cell.classList.remove('destroy')
+
+      })
+
+      shiftAllDown(targetMem)
+    }, 500);
+
+
+
   }
 
 
 }
 
+
 function shiftAllDown(above) {
+  currentScore += 100
+  score.innerHTML = 'Score: ' + currentScore
   gridTest.slice().reverse().forEach(cell => {
 
 
@@ -998,6 +976,7 @@ function shiftAllDown(above) {
     }
 
   })
+  init()
 }
 
 function popIndex(array, index) {
@@ -1009,9 +988,259 @@ function popIndex(array, index) {
 
 
 // updateShape(shapePos)
+
+updateShape(shapePos)
+
+function init() {
+  gridTest.forEach(cell => {
+    if ((gridTest.indexOf(cell) < (width ** 2)) && (gridTest.indexOf(cell) > (width ** 2) - width)) {
+      cell.classList.add('inactive')
+    }
+    if (gridTest.indexOf(cell) < width) {
+      cell.classList.add('fakeInactive')
+    }
+    if (((gridTest.indexOf(cell) % width) === 0) || ((gridTest.indexOf(cell) + 1) % width) === 0 || ((gridTest.indexOf(cell) + 2) % width) === 0 || ((gridTest.indexOf(cell) - 1) % width) === 0 || ((gridTest.indexOf(cell) - 2) % width) === 0 || ((gridTest.indexOf(cell) + 3) % width) === 0 || ((gridTest.indexOf(cell) - 3) % width) === 0 || ((gridTest.indexOf(cell) + 4) % width) === 0) {
+      cell.classList.add('inactive')
+      cell.classList.add('skip')
+    }
+    if ((((gridTest.indexOf(cell) % width) === 0) || ((gridTest.indexOf(cell) + 1) % width) === 0)) {
+      cell.classList.add('border')
+    }
+
+  })
+}
+init()
+function checkLoss() {
+  let lost = false
+  gridTest.forEach((cell) => {
+    if ((gridTest.indexOf(cell) < width * 2) && (cell.classList.contains('inactive')) && (cell.classList.contains('skip') === false) && (gridTest.indexOf(cell) > 0)) {
+      lost = true
+
+    }
+  })
+  if (lost === true){
+    lost = false
+    console.log('YOU LOSE! YA BIG LOSER!')
+    main.style.display = 'none'
+    menu.style.display = 'flex'
+  }
+}
+function upNext(shape) {
+  gridTest[77].classList.add('upNext')
+  rootTest = 77
+  gridTest.forEach((cell) => {
+    if (cell.classList.contains('upNext')) {
+      cell.classList.remove('upNext')
+    }
+  })
+
+
+  if (shape === 'Tdown') {
+    shapeTDownToRight = {
+
+
+      root: rootTest,
+      pos1: rootTest + 1,
+      pos2: rootTest + width,
+      pos3: rootTest - width
+    }
+    shape = shapeTDownToRight
+  }
+  if (shape === 'Tright') {
+    shapeTRightToUp = {
+
+      root: rootTest,
+      pos1: rootTest + 1,
+      pos2: rootTest + width,
+      pos3: rootTest - width
+    }
+    shape = shapeTRightToUp
+  }
+  if (shape === 'Tup') {
+    shapeTUpToLeft = {
+
+
+      root: rootTest,
+      pos1: rootTest + 1,
+      pos2: rootTest + width,
+      pos3: rootTest - width
+    }
+    shape = shapeTUpToLeft
+  }
+  if (shape === 'Tleft') {
+    shapeTLeftToDown = {
+
+
+      root: rootTest,
+      pos1: rootTest + 1,
+      pos2: rootTest + width,
+      pos3: rootTest - width
+    }
+    shape = shapeTLeftToDown
+  }
+
+  if (shape === 'Ldown') {
+    shapeLDownToRight = {
+
+      root: rootTest,
+      pos1: rootTest + width,
+      pos2: rootTest + (width * 2),
+      pos3: rootTest + (width * 2) + 1
+    }
+    shape = shapeLDownToRight
+  }
+  if (shape === 'Lright') {
+    shapeLRightToUp = {
+
+      root: rootTest,
+      pos1: rootTest + width,
+      pos2: rootTest + (width * 2),
+      pos3: rootTest + (width * 2) + 1
+    }
+    shape = shapeLRightToUp
+  }
+  if (shape === 'Lup') {
+    shapeLUpToLeft = {
+
+      root: rootTest,
+      pos1: rootTest + width,
+      pos2: rootTest + (width * 2),
+      pos3: rootTest + (width * 2) + 1
+    }
+    shape = shapeLUpToLeft
+  }
+  if (shape === 'Lleft') {
+    shapeLLeftToDown = {
+
+      root: rootTest,
+      pos1: rootTest + width,
+      pos2: rootTest + (width * 2),
+      pos3: rootTest + (width * 2) + 1
+    }
+    shape = shapeLLeftToDown
+  }
+  if (shape === 'Zdown') {
+    shapeZDownToRight = {
+      root: rootTest,
+      pos1: rootTest - width,
+      pos2: rootTest + 1,
+
+      pos3: rootTest + width + 1
+    }
+    shape = shapeZDownToRight
+  }
+  if (shape === 'Zright') {
+    shapeZRightToUp = {
+      root: rootTest,
+      pos1: rootTest - width,
+      pos2: rootTest + 1,
+
+      pos3: rootTest + width + 1
+    }
+    shape = shapeZRightToUp
+  }
+  if (shape === 'Cdown') {
+    shapeCDownToRight = {
+      root: rootTest,
+      pos1: rootTest + width,
+      pos2: rootTest + 1,
+      pos3: rootTest + width + 1
+
+    }
+    shape = shapeCDownToRight
+  }
+  if (shape === 'Cright') {
+    shapeCRightToUp = {
+      root: rootTest,
+      pos1: rootTest + width,
+      pos2: rootTest + 1,
+      pos3: rootTest + width + 1
+
+    }
+    shape = shapeCRightToUp
+  }
+  if (shape === 'Sdown') {
+    shapeSDownToRight = {
+      root: rootTest,
+      pos1: rootTest + width,
+
+      pos2: rootTest + (width * 2),
+      pos3: rootTest - width
+
+    }
+    shape = shapeSDownToRight
+  }
+  if (shape === 'Sright') {
+    shapeSRightToUp = {
+
+      root: rootTest,
+      pos1: rootTest + width,
+
+      pos2: rootTest + (width * 2),
+      pos3: rootTest - width
+
+    }
+    shape = shapeSRightToUp
+  }
+
+  Object.values(shape).forEach((demoCell) => {
+    gridTest[demoCell].classList.add('upNext')
+  })
+}
+// upNext(randomShape())
+
+
+// upNext(shape2)
+function shapeOrder() {
+
+  root = width / 2
+  shape2 = randomShape()
+  return shape2
+
+}
+
+// function flipShapes(){
+//   shape2 = randomShape()
+//   return shape2
+// }
+
+function newShape() {
+  root = width / 2
+  // console.log('BEFORE THE SWAP', shapePos, shape2)
+  shapePos = shape2
+  shape2 = randomShape()
+  upNext(shape2)
+  // console.log('AFTER THE SWAP', shapePos, shape2)
+}
+
 // setInterval(() => {
 //   root += width
 //   updateShape(shapePos)
 
 // }, 250);
-updateShape(shapePos)
+
+
+gamemodeButton.forEach(button => {
+  button.addEventListener('click', () => {
+
+    console.log(gamemodeButton.indexOf(button))
+    gamemode = 0
+    menu.style.display = 'none'
+    main.style.display = 'flex'
+    score.style.display = 'none'
+    reset()
+  })
+
+})
+
+function reset() {
+  filledCells = []
+
+  newShape()
+  currentScore = 0
+  gridTest.forEach(cell => {
+    if ((cell.classList.contains('border') === false) && (cell.classList.contains('skip') === false) && (cell.classList.contains('fakeInactive') === false) && (gridTest.indexOf(cell) < ((width ** 2) - width) === true)) {
+      cell.classList.remove('inactive')
+    }
+  })
+}

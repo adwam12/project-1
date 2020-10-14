@@ -3,45 +3,119 @@
 }
 
 body {
-  background-color: black;
+
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin: 0
+  margin: 0;
+  background: linear-gradient(233deg, #2d9ba7, #3bd40e, #d40ecd, #eaa00a);
+  background-size: 800% 800%;
+  animation: gradient 8s ease infinite;
+
 }
 
 .grid {
   display: flex;
   flex-direction: row;
-  border: 1px solid grey;
+  box-shadow: inset 0px 0px 150px 11px rgba(0,0,0,0.78);
+  border: 5px solid green;
   width: 600px;
   height: 600px;
   flex-wrap: wrap;
+  background-color: rgba(0, 0, 0, 0.192);
+  animation: wobble 5s ease infinite;
+  
+
+
+}
+main{
+  
+  display: flex;
+
+  margin-left: 7.5%;
+  justify-content: space-evenly;
+  flex-direction: row;
 }
 
+.sideText{
+
+  display: flex;
+
+  height: 25px;
+  width:25%;
+  margin-left: 2%;
+  flex-direction: column;
+
+}
+.score{
+  
+  margin-left: 20%;
+}
 .cell {
-  width: 10%;
-  height: 10%;
+  
+  width: 5%;
+  height: 5%;
   color: white;
-  /* border: 1px solid green; */
+  border: 1px solid green;
+  box-shadow: inset 0px 0px 2px 2px rgba(0, 128, 0, 0.459);
 }
 
+menu{
+  display: none;
+  
+}
 
 .active{
+  background-color: aqua;
+  box-shadow: inset 0px 0px 2px 2px rgb(253, 16, 16);
+  color: black
+}
+
+.inactive{
+  background-color: rgba(0, 0, 255, 0.068);
+  /* animation: pulse 3s ease infinite; */
+  box-shadow: inset 0px 0px 5px 3px rgba(0,0,0,0.78);
+  color: black
+}
+.border{
+  /* box-shadow: inset 0px 0px 2px 3px rgba(0,0,0,0.78);
+  background-color: gray; */
+  background-color: rgba(0, 0, 255, 0.068);
+  box-shadow: inset 0px 0px 5px 3px rgba(0,0,0,0.78);
+  color: black
+}
+.destroy{
+  background-color: rgba(220, 20, 60, 0);
+  animation: pulse 0.5s ease infinite;
+}
+.fakeInactive{
+  background-color: rgba(0, 0, 255, 0.068);
+  box-shadow: inset 0px 0px 5px 3px rgba(0,0,0,0.78);
+  color: black
+}
+
+.upNext{
   background-color: aqua;
   box-shadow: inset 0px 0px 2px 2px rgba(253, 16, 16, 0.75);
   color: black
 }
 
-.inactive{
-  background-color: blue;
-  color: black
+@keyframes gradient {
+  0%{background-position:0% 51%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 51%}
 }
-.border{
-  background-color: gray;
+@keyframes wobble {
+  0%{transform: rotate(0deg)}
+  25%{transform: rotate(0deg)}
+  50%{transform: rotate(0deg)}
+  75%{transform: rotate(0deg)}
+  100%{transform: rotate(0deg)}
 }
-.destroy{
-  background-color: crimson;
+@keyframes pulse{
+  0%{background-color: rgba(220, 20, 60, 0)}
+  50%{background-color: rgb(220, 20, 30)}
+  100%{background-color: rgba(220, 20, 60, 0)}
 }
