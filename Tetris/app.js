@@ -3,41 +3,32 @@ const menu = document.querySelector('menu')
 const score = document.querySelector('h1')
 const main = document.querySelector('main')
 const gamemodeButton = Array.from(document.querySelectorAll('.gamemode'))
+const highscoreText = document.querySelector('h2')
+const modeDesc = document.querySelector('aside')
+let gridTest = Array.from(document.querySelectorAll('.cell'))
 // Specifying the width of the grid.
 const width = 20
 // If I start root off as undefined, this could
 // introduce bugs
 let root = width / 2
+let dropSpeed = 0
 // Keep track of my cells
-const cells = [[]]
+
 
 let gamemode = 0
+const highscore = Number(localStorage.getItem('highscore'))
+console.log(gamemode)
+
+
+highscoreText.innerHTML = highscoreText.innerHTML + highscore.toString()
 
 let currentScore = 0
-score.innerHTML = 'Score: ' + currentScore
 
-function start(){
-
-  
-}
-
-
-for (let i = 0; i < width ** 2; i++) {
-
-  const div = document.createElement('div')
-  div.classList.add('cell')
-  grid.appendChild(div)
-  // div.innerHTML = i // ! This line will number your grid cells
-
-  cells.push(div)
-}
 let filledCells = []
 
-const gridTest = Array.from(document.querySelectorAll('.cell'))
 
-cells[root].classList.remove('root')
-// root -= 1
-cells[root].classList.add('root')
+
+
 
 function randomShape() {
   const choices = ['Ldown', 'Lup', 'Lleft', 'Lright', 'Tdown', 'Tright', 'Tup', 'Tleft', 'Zdown', 'Zright', 'Zdown', 'Zright', 'Cdown', 'Cright', 'Cdown', 'Cright', 'Sdown', 'Sright', 'Sdown', 'Sright']
@@ -89,7 +80,8 @@ document.addEventListener('keydown', (event) => {
   }
   if (key === 'l') {
     console.log(filledCells)
-    restart()
+
+    reset()
 
   }
   if (key === 'w') {
@@ -226,6 +218,12 @@ document.addEventListener('keydown', (event) => {
 
     }
   }
+  if (key === 'Escape') {
+    main.style.display = 'none'
+    menu.style.display = 'flex'
+    // if (Boolean(dropSpeed)){
+    // clearInterval(dropSpeed)}
+  }
 }
 
 )
@@ -358,6 +356,51 @@ let shapePos = randomShape()
 let shape2 = randomShape()
 
 
+function start(gamemode) {
+  console.log('GAMEMODE IN THE START FUNCTION', gamemode)
+
+  console.log('DROPSPEED IN THE START FUNCTION', dropSpeed)
+
+  const cells = [[]]
+
+  for (let i = 0; i < width ** 2; i++) {
+
+    const div = document.createElement('div')
+    div.setAttribute("id", 'square')
+    div.classList.add('cell')
+    grid.appendChild(div)
+    // div.innerHTML = i // ! This line will number your grid cells
+
+    cells.push(div)
+  }
+
+  cells[root].classList.remove('root')
+  // root -= 1
+  cells[root].classList.add('root')
+  gridTest = Array.from(document.querySelectorAll('.cell'))
+
+  if (gamemode === 2) {
+    grid.style.animation = 'wobble 25s ease infinite'
+
+  }
+  if (gamemode !== 2) {
+    grid.style.animation = 'wobbleStatic 25s ease infinite'
+  }
+
+
+  if (gamemode !== 0) {
+    score.innerHTML = 'Score: ' + currentScore
+  }
+  if (gamemode === 0) {
+    console.log('NO SCORES')
+    score.innerHTML = 'Enjoy!'
+
+  }
+  newShape()
+}
+
+start(gamemode)
+
 
 // gridTest.forEach(cell => {
 //   console.log(gridTest.indexOf(cell))
@@ -372,48 +415,50 @@ function activeShape(shape) {
   gridTest.forEach((cell) => {
     // console.log('active shape')
     if ((gridTest.indexOf(cell) === (shape.root + width)) || (gridTest.indexOf(cell) === (shape.pos1 + width)) || (gridTest.indexOf(cell) === (shape.pos2 + width)) || (gridTest.indexOf(cell) === (shape.pos3 + width))) {
-      if (cell.classList.contains('inactive')) {
+      if ((cell.classList.contains('inactive')) && (cell.classList.contains('skip') === false)) {
         console.log('ACTIVE BELOW')
+        console.log("CULPRIT!!")
         gridTest.forEach((cell) => {
           if (Object.values(shape).includes(gridTest.indexOf(cell))) {
+            if (cell.classList.contains('fakeInactive') === false) {
+              cell.classList.add('inactive')
+              console.log("ISSUE FOUND!!!")
+              loss = true
 
-            cell.classList.add('inactive')
-            loss = true
+              console.log('SET INACTIVE')
+              if (!(filledCells.includes(gridTest.indexOf(cell)))) {
+                console.log('NOT USELESS')
+                // filledCells = Object.values(shape)
 
-            console.log('SET INACTIVE')
-            if (!(filledCells.includes(gridTest.indexOf(cell)))) {
-              console.log('NOT USELESS')
-              // filledCells = Object.values(shape)
-
-              filledCells = filledCells.concat(Object.values(shape))
-              console.log(filledCells)
-              gridTest.forEach((cell) => {
-                if (Object.values(shape).includes(gridTest.indexOf(cell))) {
-                  cell.classList.add('inactive')
-                  console.log('SET INACTIVE X2')
-                  // root = width / 2
-                  // isFull()
-                  // shapePos = randomShape()
-                  // debugger
+                filledCells = filledCells.concat(Object.values(shape))
+                console.log(filledCells)
+                gridTest.forEach((cell) => {
+                  if (Object.values(shape).includes(gridTest.indexOf(cell))) {
+                    cell.classList.add('inactive')
+                    console.log('SET INACTIVE X2')
+                    // root = width / 2
+                    // isFull()
+                    // shapePos = randomShape()
+                    // debugger
 
 
-                  changeShape = true
+                    changeShape = true
 
-                  // console.log('BEFORE SWAP', shapePos, shape2)
-                  // gridTest.forEach(cell =>{
-                  //   if (cell.classList.contains('active')){
-                  //     cell.classList.remove('active')
-                  //     console.log('gone')
-                  //   }
-                  // })
+                    // console.log('BEFORE SWAP', shapePos, shape2)
+                    // gridTest.forEach(cell =>{
+                    //   if (cell.classList.contains('active')){
+                    //     cell.classList.remove('active')
+                    //     console.log('gone')
+                    //   }
+                    // })
 
-                }
+                  }
 
-              })
+                })
+              }
+
             }
-
           }
-
         })
 
       }
@@ -426,31 +471,33 @@ function activeShape(shape) {
 
       // console.log('Works!')
       if ((gridTest.indexOf(cell) >= ((width ** 2) - width)) || (filledCells.includes(gridTest.indexOf(cell)))) {
-        console.log('Object: ', shape)
+        if (cell.classList.contains('fakeInactive') === false) {
+          console.log('Object: ', shape)
 
-        console.log('Values in the Object: ', Object.values(shape))
-        console.log('FilledCells: ', filledCells)
+          console.log('Values in the Object: ', Object.values(shape))
+          console.log('FilledCells: ', filledCells)
 
-        // if (!(filledCells.includes(gridTest.indexOf(cell)))) {
-        //   debugger
-        //   console.log('ADDING TO FILLED')
-        //   // filledCells = Object.values(shape)
+          // if (!(filledCells.includes(gridTest.indexOf(cell)))) {
+          //   debugger
+          //   console.log('ADDING TO FILLED')
+          //   // filledCells = Object.values(shape)
 
-        //   filledCells = filledCells.concat(Object.values(shape))
-        //   console.log(filledCells)
-        //   gridTest.forEach((cell) => {
-        //     if (Object.values(shape).includes(gridTest.indexOf(cell))) {
-        //       cell.classList.add('inactive')
-        //       root = width / 2
-        //       isFull()
-        //       shapePos = randomShape()
-        //       updateShape(shape)
-        //     }
+          //   filledCells = filledCells.concat(Object.values(shape))
+          //   console.log(filledCells)
+          //   gridTest.forEach((cell) => {
+          //     if (Object.values(shape).includes(gridTest.indexOf(cell))) {
+          //       cell.classList.add('inactive')
+          //       root = width / 2
+          //       isFull()
+          //       shapePos = randomShape()
+          //       updateShape(shape)
+          //     }
 
-        //   })
-        // }
-        cell.classList.add('inactive')
-        return filledCells
+          //   })
+          // }
+          cell.classList.add('inactive')
+          return filledCells
+        }
       }
     } else {
       if (cell.classList.contains('active')) {
@@ -463,7 +510,8 @@ function activeShape(shape) {
     newShape()
     isFull()
   }
-  if (loss === true){
+  if (loss === true) {
+
     checkLoss()
     loss = false
   }
@@ -951,8 +999,10 @@ function checkRow(target) {
 
 
 function shiftAllDown(above) {
-  currentScore += 100
-  score.innerHTML = 'Score: ' + currentScore
+  if (gamemode !== 0) {
+    currentScore += 100
+    score.innerHTML = 'Score: ' + currentScore
+  }
   gridTest.slice().reverse().forEach(cell => {
 
 
@@ -998,6 +1048,7 @@ function init() {
     }
     if (gridTest.indexOf(cell) < width) {
       cell.classList.add('fakeInactive')
+      cell.classList.add('skip')
     }
     if (((gridTest.indexOf(cell) % width) === 0) || ((gridTest.indexOf(cell) + 1) % width) === 0 || ((gridTest.indexOf(cell) + 2) % width) === 0 || ((gridTest.indexOf(cell) - 1) % width) === 0 || ((gridTest.indexOf(cell) - 2) % width) === 0 || ((gridTest.indexOf(cell) + 3) % width) === 0 || ((gridTest.indexOf(cell) - 3) % width) === 0 || ((gridTest.indexOf(cell) + 4) % width) === 0) {
       cell.classList.add('inactive')
@@ -1013,21 +1064,28 @@ init()
 function checkLoss() {
   let lost = false
   gridTest.forEach((cell) => {
-    if ((gridTest.indexOf(cell) < width * 2) && (cell.classList.contains('inactive')) && (cell.classList.contains('skip') === false) && (gridTest.indexOf(cell) > 0)) {
+    if ((gridTest.indexOf(cell) < width * 2) && (cell.classList.contains('inactive')) && (cell.classList.contains('skip') === false) && (gridTest.indexOf(cell) > 0) && ((cell.classList.contains('fakeInactive') === false))) {
+      console.log('LAST CELL THAT EXISTED!', gridTest.indexOf(cell))
       lost = true
 
     }
   })
-  if (lost === true){
+  if (lost === true) {
+
     lost = false
+    if (highscore < currentScore) {
+      localStorage.setItem('highscore', currentScore)
+      highscoreText.innerHTML = currentScore
+    }
     console.log('YOU LOSE! YA BIG LOSER!')
     main.style.display = 'none'
     menu.style.display = 'flex'
+    // clearInterval(dropSpeed)
   }
 }
 function upNext(shape) {
   gridTest[77].classList.add('upNext')
-  rootTest = 77
+  const rootTest = 77
   gridTest.forEach((cell) => {
     if (cell.classList.contains('upNext')) {
       cell.classList.remove('upNext')
@@ -1213,22 +1271,54 @@ function newShape() {
   // console.log('AFTER THE SWAP', shapePos, shape2)
 }
 
-// setInterval(() => {
-//   root += width
-//   updateShape(shapePos)
-
-// }, 250);
 
 
 gamemodeButton.forEach(button => {
+  button.addEventListener('mouseover', () => {
+    if (gamemodeButton.indexOf(button) === 0) {
+      modeDesc.innerHTML = "No score, blocks don't automatically fall, take your time! Relax!"
+      button.style.backgroundColor = 'rgb(184, 184, 184)'
+    }
+    if (gamemodeButton.indexOf(button) === 1) {
+      modeDesc.innerHTML = "Regular o'l Tetris, try to beat your highscore!"
+      button.style.backgroundColor = 'rgb(184, 184, 184)'
+    }
+    if (gamemodeButton.indexOf(button) === 2) {
+      modeDesc.innerHTML = "Hardcore Tetris? How can Tetris be hardcore? Well click this and find out. (Might result in nausea...)"
+      button.style.backgroundColor = 'rgb(184, 184, 184)'
+    }
+    button.addEventListener('mouseout', () => {
+      button.style.backgroundColor = 'rgb(167, 167, 167)'
+    })
+
+
+  })
   button.addEventListener('click', () => {
 
-    console.log(gamemodeButton.indexOf(button))
-    gamemode = 0
-    menu.style.display = 'none'
+    console.log('NEXT GAMEMODE CHECK', gamemodeButton.indexOf(button))
+    gamemode = gamemodeButton.indexOf(button)
     main.style.display = 'flex'
-    score.style.display = 'none'
+    menu.style.display = 'none'
+    if (gamemode !== 0) {
+      if (dropSpeed === 0) {
+
+        dropSpeed = setInterval(() => {
+          root += width
+          updateShape(shapePos)
+
+        }, 500)
+      }
+    } if (gamemode === 0) {
+      
+      if (dropSpeed !== 0) {
+        clearInterval(dropSpeed)
+        dropSpeed = 0
+      }
+      console.log(dropSpeed)
+    }
     reset()
+    // location.reload()
+
   })
 
 })
@@ -1237,10 +1327,24 @@ function reset() {
   filledCells = []
 
   newShape()
+  updateShape(shapePos)
+  for (let i = 0; i < width ** 2; i++) {
+    const divr = document.getElementById('square')
+    grid.removeChild(divr)
+
+    // div.innerHTML = i // ! This line will number your grid cells
+
+  }
+  console.log("CURRENT GAMEMODE", gamemode)
+  start(gamemode)
+  init()
+  main.style.display = 'flex'
+  menu.style.display = 'none'
   currentScore = 0
   gridTest.forEach(cell => {
     if ((cell.classList.contains('border') === false) && (cell.classList.contains('skip') === false) && (cell.classList.contains('fakeInactive') === false) && (gridTest.indexOf(cell) < ((width ** 2) - width) === true)) {
       cell.classList.remove('inactive')
     }
   })
+  filledCells = []
 }

@@ -3,7 +3,7 @@
 }
 
 body {
-
+  font-family: 'Sora', sans-serif;
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -14,9 +14,28 @@ body {
   background-size: 800% 800%;
   animation: gradient 8s ease infinite;
 
+
 }
 
+.sidebar{
+  display: flex;
+  flex-wrap: wrap;
+  width: 350px;
+  color: black;
+  justify-content: space-around;
+  align-content: space-between;
+  background-color: rgba(44, 44, 44, 0.308);
+  margin-right: 2.5%;
+
+}
+
+h3{
+  margin: 0px;
+}
+
+
 .grid {
+ 
   display: flex;
   flex-direction: row;
   box-shadow: inset 0px 0px 150px 11px rgba(0,0,0,0.78);
@@ -25,20 +44,27 @@ body {
   height: 600px;
   flex-wrap: wrap;
   background-color: rgba(0, 0, 0, 0.192);
-  animation: wobble 5s ease infinite;
+  animation: wobbleStatic 5s ease infinite;
   
 
+
+}
+iframe{
+  display: flex;
+  opacity: 75%;
 
 }
 main{
   
-  display: flex;
-
-  margin-left: 7.5%;
+  display: none;
   justify-content: space-evenly;
   flex-direction: row;
 }
-
+menu span{
+  font-family: 'Bungee Outline';
+  text-align: center;
+  font-size: 100px;
+}
 .sideText{
 
   display: flex;
@@ -49,9 +75,9 @@ main{
   flex-direction: column;
 
 }
-.score{
-  
-  margin-left: 20%;
+h2{
+
+  text-align: right;
 }
 .cell {
   
@@ -63,8 +89,59 @@ main{
 }
 
 menu{
-  display: none;
+  display: flex;
+  flex-direction: column;
+
+
+}
+
+.gamemode{
+  flex-direction: column;
+}
+.buttoncontrol{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+.sidemenu{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  border: 10%;
+  border-radius: 10px solid blue;
+
+  margin:4%;
+  margin-left: 35%;
+}
+button{
+  font-family: 'Sora', sans-serif;
+  font-size: 20px;
+  background-color: rgb(167, 167, 167);
+  display: flex;
+  margin:2.5%;
+  height: 50px;
+  width: 200px;
+  padding:3.5%;
+  text-align: center;
+  align-items: center;
+
   
+}
+aside{
+  background-color: rgba(128, 128, 128, 0.445);
+  display: flex;
+
+  margin-left: 5%;
+  width: 600px;
+  text-align: center;
+  align-items: center;
+
+}
+
+a{
+
+  text-align: center;
+  color: white;
 }
 
 .active{
@@ -107,13 +184,22 @@ menu{
   50%{background-position:100% 50%}
   100%{background-position:0% 51%}
 }
-@keyframes wobble {
+@keyframes wobbleStatic {
   0%{transform: rotate(0deg)}
   25%{transform: rotate(0deg)}
   50%{transform: rotate(0deg)}
   75%{transform: rotate(0deg)}
   100%{transform: rotate(0deg)}
 }
+
+@keyframes wobble {
+  0%{transform: rotate(0deg)}
+  25%{transform: rotate(90deg)}
+  50%{transform: rotate(-180deg)}
+  75%{transform: rotate(90deg)}
+  100%{transform: rotate(0deg)}
+}
+
 @keyframes pulse{
   0%{background-color: rgba(220, 20, 60, 0)}
   50%{background-color: rgb(220, 20, 30)}

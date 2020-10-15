@@ -6,17 +6,32 @@ const main = document.querySelector('main')
 
 const cellTest = Array.from(document.querySelectorAll('.cell'))
 const menu = document.querySelector('span')
-
+let grid = Array.from(document.querySelectorAll('.cell'))
 const reset = document.querySelector('.reset')
+const clock = document.querySelector('h4')
+const timenow = clock.innerHTML.split(':')
+const score = document.querySelector('.score')
+const time = {
+  minute: Number(timenow[0]),
+  second: Number(timenow[1])
+}
+let lastscore = localStorage.getItem("lastscore")
+if (Boolean(lastscore)) {
+  score.innerHTML = lastscore
+} else {
+  score.innerHTML = 'Time: 00:00'
+}
+
+
+
+
 
 let victoryCounter = 0
 
-///
-/// NICK'S GRID CODE START
-///
+
 const gridt = document.querySelector('.grid')
 // Specifying the width of the grid.
-const width = 10
+let widthG = 10
 
 // Keep track of my cells
 let cells = []
@@ -41,17 +56,41 @@ function populateAr(gridSize) {
 
 
 
-///
-/// NICK'S GRID CODE END
-///
-
+let timer = 0
 
 
 sizeButton.forEach(element => {
   element.addEventListener('click', () => {
+    if (clock.innerHTML !== 'Time: 00:00') {
+      clock.innerHTML = 'Time: 00:00'
+
+    }
+    if (timer === 0) {
+      timer = setInterval(() => {
+        console.log(time)
+        time.second += 1
+        if (time.second > 59) {
+          time.minute += 1
+          time.second = 0
+        }
+
+        if ((time.second < 10) && (time.minute < 10)) {
+          clock.innerHTML = 'Time: ' + '0' + time.minute.toString() + ':' + '0' + time.second.toString()
+        }
+        if ((time.minute < 10) && (time.second > 9)) {
+          clock.innerHTML = 'Time: ' + '0' + time.minute.toString() + ':' + time.second.toString()
+        }
+        if ((time.minute > 9) && (time.second < 10)) {
+          clock.innerHTML = 'Time: ' + time.minute.toString() + ':' + '0' + time.second.toString()
+        }
+        if ((time.minute > 9) && (time.second > 9)) {
+          clock.innerHTML = 'Time: ' + time.minute.toString() + ':' + time.second.toString()
+        }
+
+      }, 1000);
+    }
     console.log(element.innerHTML)
     if (element.innerHTML === 'BIG') {
-      console.log('why')
       start(20)
       main.style.display = 'flex'
       cellTest.forEach(indivCell => {
@@ -95,11 +134,14 @@ sizeButton.forEach(element => {
     }
   })
 })
-
+let totalFree = 0
 function start(width) {
   menu.style.display = 'none'
   main.style.display = 'flex'
-  let totalFree = 0
+  totalFree = 0
+  widthG = width
+
+
 
   populateAr(width)
   for (let i = 0; i < width ** 2; i++) {
@@ -127,7 +169,7 @@ function start(width) {
     return item
   })
 
-  const grid = Array.from(document.querySelectorAll('.cell'))
+  grid = Array.from(document.querySelectorAll('.cell'))
 
   if (width === 5) {
     grid.forEach(indivCell => {
@@ -167,10 +209,13 @@ function start(width) {
 
 
       if (e.shiftKey) {
-        console.log("YO")
-        if (cell.classList.contains('hidden') === true) {
+
+        if (cell.classList.contains('flag') === false) {
           cell.classList.add('flag')
+        } else {
+          cell.classList.remove('flag')
         }
+
       } else {
 
         if (cell.classList.contains('discovered') === false) {
@@ -182,6 +227,11 @@ function start(width) {
             console.log('rip')
             cell.innerHTML = 'X'
             cell.classList.add('mine')
+            gridt.textContent = ''
+            restart()
+          } else {
+            victoryCounter += 1
+            checkWin()
           }
 
           if (cell.innerHTML === '0') {
@@ -201,9 +251,10 @@ function start(width) {
             console.log(cell)
           }
         }
+        checkWin()
       }
     })
-  
+
 
   }
 
@@ -349,11 +400,13 @@ function start(width) {
         element.classList.add('empty')
         element.classList.replace('hidden', 'discovered')
         victoryCounter += 1
-        console.log(victoryCounter)
+        checkWin()
+        console.log("VICTORY COUNTER", victoryCounter)
 
       }
 
     })
+
     grid.forEach(cell => {
 
       if (cell.innerHTML === '0') {
@@ -370,8 +423,9 @@ function start(width) {
         })
       } else {
         if (cell.classList.contains('discovered')) {
-          victoryCounter += 1
-          console.log(victoryCounter)
+          // victoryCounter += 1
+          // checkWin()
+          console.log("VICTORY COUNTER 2", victoryCounter)
         }
       }
 
@@ -476,7 +530,7 @@ function start(width) {
   reset.addEventListener('click', () => {
     // grid.forEach((c) =>{
 
-      
+
     // })
     gridt.textContent = ''
     restart()
@@ -497,6 +551,10 @@ function popIndex(array, index) {
 
 
 function restart() {
+  time.minute = 0
+  time.second = 0
+  clearInterval(timer)
+  timer = 0
   pol = [[]]
   cells = []
   main.style.display = 'none'
@@ -522,3 +580,24 @@ function restart() {
 //   grid.appendChild(div)
 // }
 
+function checkWin() {
+  // console.log(totalFree)
+  let targetgoal = ((widthG ** 2) - totalFree)
+  let counter1 = 0
+  grid.forEach(cell => {
+    // console.log('activate')
+    if (cell.classList.contains('discovered')) {
+      counter1 += 1
+
+    }
+  })
+  // console.log(counter1)
+  // console.log("TARGET", targetgoal)
+  if ((counter1) === ((widthG ** 2) - totalFree)) {
+    gridt.textContent = ''
+    localStorage.setItem("lastscore", clock.innerHTML)
+    score.innerHTML = clock.innerHTML
+    restart()
+  }
+
+}

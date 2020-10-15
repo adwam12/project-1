@@ -3,6 +3,7 @@
 }
 
 body {
+  font-family: 'Staatliches', cursive;
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -10,12 +11,21 @@ body {
   flex-direction: column;
   flex-wrap: wrap;
   margin: 0;
+  animation: pulseBtW 12s ease infinite;
+}
+span h1{
+  font-size: 70px;
+  text-decoration: underline;
 }
 main{
   display: none;
   flex-direction: column;
 }
-
+a{
+  text-align: center;
+  margin-top: 6%;
+  color:black;
+}
 .grid {
   font-size: xx-small;
   display: flex;
@@ -39,6 +49,9 @@ main{
   height: 10%;
   border: 2px solid  gray;
 }
+h4{
+  font-size: 25px;
+}
 .mine{
   background-color: darkred;
 }
@@ -49,7 +62,8 @@ main{
   box-shadow: inset 0px 0px 5px 2px rgba(196,133,25,0.81);
 }
 .flag{
-  background-color: burlywood;
+  background-image: url('https://lh3.googleusercontent.com/proxy/kaHu43AQgFcYEIljI499FzKGVFYCidrsB2qm_asVuToIh1gwz20t5dOn39a3R45NLcp-XTHM9xnP4OThQcTpjTOchH0rAoWrlly2URWfasexK0mZB3CjrgexrIcwnSnBRzgBiWY-MyecVWl8gVvz0GIoKaZnVg');
+  background-size: cover;
 }
 span{
   display: flex;
@@ -58,9 +72,24 @@ span{
   flex-direction: column;
 
 }
-button{
+h3{
+  font-size: 25px;
+}
+.titles{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.selectables button{
   margin-left: 5%;
   margin-right: 5%;
+  margin-top: 5%;
+  width: 75%;
+  padding: 10px;
+}
+.selectables{
+  display: flex;
+  flex-direction: row;
 }
 .UI{
   display: flex;
@@ -83,4 +112,14 @@ button{
   */
   -ms-user-select: none;
   user-select: none;
+}
+@keyframes pulseWtB{
+  0%{background-color: white}
+  50%{background-color: black}
+  100%{background-color: white;}
+}
+@keyframes pulseBtW{
+  0%{background-color: rgb(179, 179, 179)}
+  50%{background-color: white}
+  100%{background-color: rgb(179, 179, 179);}
 }
