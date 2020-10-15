@@ -3,6 +3,7 @@ const freeSpots = document.querySelector('h2')
 let performanceTest = 0
 const sizeButton = Array.from(document.querySelectorAll('.resize'))
 const main = document.querySelector('main')
+const title = document.querySelector('span h1')
 
 const cellTest = Array.from(document.querySelectorAll('.cell'))
 const menu = document.querySelector('span')
@@ -228,6 +229,7 @@ function start(width) {
             cell.innerHTML = 'X'
             cell.classList.add('mine')
             gridt.textContent = ''
+            title.innerHTML = "You Lost!"
             restart()
           } else {
             victoryCounter += 1
@@ -597,6 +599,7 @@ function checkWin() {
     gridt.textContent = ''
     localStorage.setItem("lastscore", clock.innerHTML)
     score.innerHTML = clock.innerHTML
+    title.innerHTML = "You Won!"
     restart()
   }
 
