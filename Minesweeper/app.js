@@ -220,9 +220,7 @@ function start(width) {
       } else {
 
         if (cell.classList.contains('discovered') === false) {
-
           cell.innerHTML = findAround(grid.indexOf(cell))
-
           cell.classList.replace('hidden', 'discovered')
           if (cell.innerHTML === 'false') {
             console.log('rip')
@@ -243,20 +241,12 @@ function start(width) {
             console.log(discoverEmpty())
             const near = discoverElem(grid.indexOf(cell))
             console.log("NEAR", near)
-            // grid.forEach(element => {
-            //   console.log('INDEX OF GRID= ', grid.indexOf(element))
-            //   console.log('INCLUDES TEST= ',near.includes(grid.indexOf(element)))
-            //   if (near.includes(grid.indexOf(element)) === true){
-            //     element.innerHTML = findAround(grid.indexOf(element))
-            //     console.log('IT WORKS!!')}
-            // })
             console.log(cell)
           }
         }
         checkWin()
       }
     })
-
 
   }
 
@@ -289,9 +279,6 @@ function start(width) {
   )
 
   function findAround(target) {
-    // console.log(pol.length)
-    // console.log('Target=', target)
-
     let counter = -1
     let mineCount = 0
     let safe = true
@@ -305,27 +292,22 @@ function start(width) {
             console.log('Thats a mine!')
             safe = false
           }
-
           //Checks cell above target
           if (pol[c - 1] && pol[c - 1][i]) {
             // console.log('Above: ', pol[c - 1][i])
             if (pol[c - 1][i] === 1) {
               mineCount += 1
             }
-
           }
-
           //Checks cell above to the right
           if (pol[c - 1] && pol[c - 1][i + 1]) {
             // console.log('Above-Right: ', pol[c - 1][i + 1])
             if (pol[c - 1][i + 1] === 1) {
               mineCount += 1
             }
-
           }
           //Checks to the right of target
           if (Boolean(pol[c][i + 1]) === true) {
-            // console.log('Right: ', pol[c][i + 1])
             if (pol[c][i + 1] === 1) {
               mineCount += 1
             }
@@ -336,27 +318,21 @@ function start(width) {
             if (pol[c + 1][i + 1] === 1) {
               mineCount += 1
             }
-
           }
           //Checks cell under target
-
           if (pol[c + 1] && pol[c + 1][i]) {
             // console.log('Below: ', pol[c + 1][i])
             if (pol[c + 1][i] === 1) {
               mineCount += 1
             }
           }
-
-
           //Checks under to the left
           if (pol[c + 1] && pol[c + 1][i - 1]) {
             // console.log('Below-Left: ', pol[c + 1][i - 1])
             if (pol[c + 1][i - 1] === 1) {
               mineCount += 1
             }
-
           }
-
           //Checks to the left of target
           if (Boolean(pol[c][i - 1]) === true) {
             // console.log('Left: ', pol[c][i - 1])
@@ -370,10 +346,7 @@ function start(width) {
             if (pol[c - 1][i - 1] === 1) {
               mineCount += 1
             }
-
           }
-
-
         }
       }
     }

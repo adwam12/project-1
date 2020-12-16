@@ -15,8 +15,9 @@ The task was to individually create a game based on a grid of cells in one week.
 
 ## Technologies Used:
 * JavaScript (ES6)
-* CSS
+* HTML5 & CSS3
 * GitHub Pages
+* Git
 
 ## Challenges:
 
