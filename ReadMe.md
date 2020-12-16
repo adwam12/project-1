@@ -61,7 +61,7 @@ I decided to give the game a "funk" aesthetic, and game modes to match. The "har
 #### Part 1 of the active shape function
 
 Controls movement, this is run for every cell in the active shape:
-
+```
 if ((gridTest.indexOf(cell) === (shape.root + width)) || (gridTest.indexOf(cell) === (shape.pos1 + width)) || (gridTest.indexOf(cell) === (shape.pos2 + width)) || (gridTest.indexOf(cell) === (shape.pos3 + width))) {
       if ((cell.classList.contains('inactive')) && (cell.classList.contains('skip') === false)) {
         console.log('ACTIVE BELOW')
@@ -87,21 +87,22 @@ if ((gridTest.indexOf(cell) === (shape.root + width)) || (gridTest.indexOf(cell)
         })
       }
     }
-
+```
 #### Snippet of shape rotation model
 For the Z shape moving from pointing down to pointing right:
-
+```
   shapeZDownToRight = {
     root: root,
     pos1: root + width,
     pos2: root + 1,
     pos3: root + width - 1
   }
+```
   
 #### Snippet of a key input function
-`
+```
   if (key === 'w') {
-    if (canTurn(shapePos) === true) {
+  	if (canTurn(shapePos) === true) {
       if (shapePos === 'Ldown') {
         shapeLDownToRight.pos1 = root + 1
         shapeLDownToRight.pos2 = root + 2
@@ -110,5 +111,5 @@ For the Z shape moving from pointing down to pointing right:
         activeShape(shapeLDownToRight)
         return
       }
-      `
+```
 ## Screenshots:
