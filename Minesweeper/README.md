@@ -37,6 +37,7 @@ On grid generation, assign a number of mines depending on the grid size/difficul
 ### Last touches
 * Adding a timer to keep track of a high score
 * Create different levels/difficulty
+* Adding a Zen color scheme with animated background
 
 
 ##Code Snippet:
@@ -70,6 +71,6 @@ function findAround(target) {
           }
 ```
 ## Screenshots:
-![](images/Mine_Main.png)
 ![](images/Mine_Menu.png)
+![](images/Mine_Main.png)
 ![](images/Mine_Lose.png)
