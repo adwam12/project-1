@@ -99,6 +99,7 @@ For the Z shape moving from pointing down to pointing right:
   }
   
 #### Snippet of a key input function
+`
   if (key === 'w') {
     if (canTurn(shapePos) === true) {
       if (shapePos === 'Ldown') {
@@ -109,4 +110,5 @@ For the Z shape moving from pointing down to pointing right:
         activeShape(shapeLDownToRight)
         return
       }
+      `
 ## Screenshots:
