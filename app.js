@@ -413,88 +413,38 @@ function activeShape(shape) {
   let loss = false
 
   gridTest.forEach((cell) => {
-    // console.log('active shape')
     if ((gridTest.indexOf(cell) === (shape.root + width)) || (gridTest.indexOf(cell) === (shape.pos1 + width)) || (gridTest.indexOf(cell) === (shape.pos2 + width)) || (gridTest.indexOf(cell) === (shape.pos3 + width))) {
       if ((cell.classList.contains('inactive')) && (cell.classList.contains('skip') === false)) {
         console.log('ACTIVE BELOW')
-        console.log("CULPRIT!!")
         gridTest.forEach((cell) => {
           if (Object.values(shape).includes(gridTest.indexOf(cell))) {
             if (cell.classList.contains('fakeInactive') === false) {
               cell.classList.add('inactive')
-              console.log("ISSUE FOUND!!!")
               loss = true
-
               console.log('SET INACTIVE')
               if (!(filledCells.includes(gridTest.indexOf(cell)))) {
                 console.log('NOT USELESS')
-                // filledCells = Object.values(shape)
-
                 filledCells = filledCells.concat(Object.values(shape))
                 console.log(filledCells)
                 gridTest.forEach((cell) => {
                   if (Object.values(shape).includes(gridTest.indexOf(cell))) {
                     cell.classList.add('inactive')
-                    console.log('SET INACTIVE X2')
-                    // root = width / 2
-                    // isFull()
-                    // shapePos = randomShape()
-                    // debugger
-
-
                     changeShape = true
-
-                    // console.log('BEFORE SWAP', shapePos, shape2)
-                    // gridTest.forEach(cell =>{
-                    //   if (cell.classList.contains('active')){
-                    //     cell.classList.remove('active')
-                    //     console.log('gone')
-                    //   }
-                    // })
-
                   }
-
                 })
               }
-
             }
           }
         })
-
       }
-
     }
     if (Object.values(shape).includes(gridTest.indexOf(cell))) {
       cell.classList.add('active')
-
-      // console.log(shape.root)
-
-      // console.log('Works!')
       if ((gridTest.indexOf(cell) >= ((width ** 2) - width)) || (filledCells.includes(gridTest.indexOf(cell)))) {
         if (cell.classList.contains('fakeInactive') === false) {
           console.log('Object: ', shape)
-
           console.log('Values in the Object: ', Object.values(shape))
           console.log('FilledCells: ', filledCells)
-
-          // if (!(filledCells.includes(gridTest.indexOf(cell)))) {
-          //   debugger
-          //   console.log('ADDING TO FILLED')
-          //   // filledCells = Object.values(shape)
-
-          //   filledCells = filledCells.concat(Object.values(shape))
-          //   console.log(filledCells)
-          //   gridTest.forEach((cell) => {
-          //     if (Object.values(shape).includes(gridTest.indexOf(cell))) {
-          //       cell.classList.add('inactive')
-          //       root = width / 2
-          //       isFull()
-          //       shapePos = randomShape()
-          //       updateShape(shape)
-          //     }
-
-          //   })
-          // }
           cell.classList.add('inactive')
           return filledCells
         }
@@ -511,7 +461,6 @@ function activeShape(shape) {
     isFull()
   }
   if (loss === true) {
-
     checkLoss()
     loss = false
   }
@@ -1004,27 +953,18 @@ function shiftAllDown(above) {
     score.innerHTML = 'Score: ' + currentScore
   }
   gridTest.slice().reverse().forEach(cell => {
-
-
-
     if (gridTest.indexOf(cell) < above) {
       if (cell.classList.contains('inactive')) {
         gridTest.forEach((cellUnder) => {
           if (gridTest.indexOf(cellUnder) === (gridTest.indexOf(cell) + width)) {
-            // console.log('check')
-            // console.log('Cell Master: ', cell, 'Cell Checked:', cellUnder)
             if ((cellUnder.classList.contains('inactive') === false)) {
-              // console.log('SHift it down', cellUnder)
               cell.classList.remove('inactive')
               cellUnder.classList.add('inactive')
-
             }
           }
-
         })
       }
     }
-
   })
   init()
 }
