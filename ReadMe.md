@@ -50,16 +50,6 @@ I now had a fully working prototype and had a few things to improve before publi
 
 I decided to give the game a "funk" aesthetic, and game modes to match. The "hardcore" gamemode was implemented by adding a css animation to the entire grid, the "normal" gamemode provided the standard tetris experience, and the "chill" gamemode removed the automatic time constraint and the highscore.
 
-## Challenges:
-
-* Creating different blocks/Tetromino
-* Making the Tetromino rotate around
-* General Tetromino movement
-* Emptying a full line and moving each Tetromino above down one
-* Collision detection
-
-By far the biggest challenge of this project was creating a working system for collision detection, both for filled blocks but also for the edges of the game board. A spot had to be empty for the Tetrino to rotate, move side to side and appear.
-
 ## Code Snippets:
 #### Part 1 of the active shape function
 
@@ -119,6 +109,17 @@ For the Z shape moving from pointing down to pointing right:
 * Build a backend to be able to provide a global leaderboard
 * The embeded Spotify only plays snippets unless the user has Spotify Premium
 * Add various sound effects
+
+## Challenges:
+
+* Creating different blocks/Tetromino
+* Making the Tetromino rotate around
+* General Tetromino movement
+* Emptying a full line and moving each Tetromino above down one
+* Collision detection
+
+By far the biggest challenge of this project was creating a working system for collision detection, both for filled blocks but also for the edges of the game board. A spot had to be empty for the Tetrino to rotate, move side to side and appear.
+
 
 ## Screenshots:
 ![](images/Tetris_Menu.png)
