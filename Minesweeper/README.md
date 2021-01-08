@@ -6,6 +6,8 @@ Minesweeper is one of my first front-end development projects created during and
 
 The task was to individually create a game based on a grid of cells in one week. Minesweeper was developed after Tetris Funk in the remaining two days I had left.
 
+Link: https://adwam12.github.io/project-1/Minesweeper/
+
 ## Project requirements:
 * Create a browser based grid game
 * Use JavaScript for DOM manipulation
@@ -18,8 +20,6 @@ The task was to individually create a game based on a grid of cells in one week.
 * GitHub Pages
 * Git
 
-## Challenges:
-The biggest challenge was to find a way to run through every cell and check the surrounding cell's values.
 
 ## Development:
 ### Setting the foundations
@@ -39,6 +39,13 @@ On grid generation, assign a number of mines depending on the grid size/difficul
 * Create different levels/difficulty
 * Adding a Zen color scheme with animated background
 
+## Future Features
+* Adding various sound effects
+* Adding music
+* Adding a backend to create global leaderboards
+
+## Challenges:
+The biggest challenge was to find a way to run through every cell and check the surrounding cell's values.
 
 ##Code Snippet:
 ```
