@@ -21,16 +21,6 @@ Link: https://adwam12.github.io/project-1/index.html
 * GitHub Pages
 * Git
 
-## Challenges:
-
-* Creating different blocks/Tetromino
-* Making the Tetromino rotate around
-* General Tetromino movement
-* Emptying a full line and moving each Tetromino above down one
-* Collision detection
-
-By far the biggest challenge of this project was creating a working system for collision detection, both for filled blocks but also for the edges of the game board. A spot had to be empty for the Tetrino to rotate, move side to side and appear.
-
 ## Development:
 ### Setting the foundations
 I started the development by creating a working grid, that could have individual cells colored in by css. I wanted the grid to be modular so it could be easily changed if my project took an unexpected direction. The grid started as a 5x5 for testing purposes, meaning it consisted of 5 arrays, each containing 5 elements. For each element in the grid, I created an html "cell" who's behavior would be determined by class tags I could programatically add or remove. To move a single cell down, it would carry the "active" tag, meaning it was not an empty cell, then I would remove that active cell tag and add it to the cell below it, after calculating it's new position. 
@@ -59,6 +49,16 @@ I now had a fully working prototype and had a few things to improve before publi
 * Improve the look of the game
 
 I decided to give the game a "funk" aesthetic, and game modes to match. The "hardcore" gamemode was implemented by adding a css animation to the entire grid, the "normal" gamemode provided the standard tetris experience, and the "chill" gamemode removed the automatic time constraint and the highscore.
+
+## Challenges:
+
+* Creating different blocks/Tetromino
+* Making the Tetromino rotate around
+* General Tetromino movement
+* Emptying a full line and moving each Tetromino above down one
+* Collision detection
+
+By far the biggest challenge of this project was creating a working system for collision detection, both for filled blocks but also for the edges of the game board. A spot had to be empty for the Tetrino to rotate, move side to side and appear.
 
 ## Code Snippets:
 #### Part 1 of the active shape function
@@ -115,6 +115,11 @@ For the Z shape moving from pointing down to pointing right:
         return
       }
 ```
+## Future Development
+* Build a backend to be able to provide a global leaderboard
+* The embeded Spotify only plays snippets unless the user has Spotify Premium
+* Add various sound effects
+
 ## Screenshots:
 ![](images/Tetris_Menu.png)
 ![](images/Tetris_Main.png)
