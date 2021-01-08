@@ -8,6 +8,8 @@ Tetris Funk is my first front-end development project created during and for the
 
 The task was to individually create a game based on a grid of cells in one week.
 
+Link: https://adwam12.github.io/project-1/index.html
+
 ## Project requirements:
 * Create a browser based grid game
 * Use JavaScript for DOM manipulation
