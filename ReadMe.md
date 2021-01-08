@@ -105,7 +105,12 @@ For the Z shape moving from pointing down to pointing right:
         return
       }
 ```
-## Future Development
+## Key Learnings:
+* Recursive loops
+* Modifying a 2D array
+* Learning to manipulate the DOM with JavaScript
+
+## Future Development:
 * Build a backend to be able to provide a global leaderboard
 * The embeded Spotify only plays snippets unless the user has Spotify Premium
 * Add various sound effects
