@@ -39,15 +39,8 @@ On grid generation, assign a number of mines depending on the grid size/difficul
 * Create different levels/difficulty
 * Adding a Zen color scheme with animated background
 
-## Future Features
-* Adding various sound effects
-* Adding music
-* Adding a backend to create global leaderboards
 
-## Challenges:
-The biggest challenge was to find a way to run through every cell and check the surrounding cell's values.
-
-##Code Snippet:
+## Code Snippet:
 ```
 function findAround(target) {
     let counter = -1
@@ -77,6 +70,20 @@ function findAround(target) {
             }
           }
 ```
+
+## Takeaways
+* Recursive loops
+* Modifying a 2D array
+* Learning to manipulate the DOM with JavaScript
+
+## Future Features
+* Adding various sound effects
+* Adding music
+* Adding a backend to create global leaderboards
+
+## Challenges:
+The biggest challenge was to find a way to run through every cell and check the surrounding cell's values.
+
 ## Screenshots:
 ![](images/Mine_Menu.png)
 ![](images/Mine_Main.png)
